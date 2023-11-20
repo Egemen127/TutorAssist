@@ -21,7 +21,10 @@
     animation: App-logo-spin infinite 5s linear;
   }
 }
-
+Card{
+  margin: 5px;
+  background-color: #282c34;
+}
 .App-header {
   background-color: #282c34;
   display: flex;
@@ -37,6 +40,9 @@
   max-height: 20%;
   max-width: 120px;
   margin: 5px;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  padding:5px
 }
 
 .Button{
@@ -58,13 +64,15 @@
   display: grid;
   grid-template-columns:  1fr 1fr;
   justify-content: center;
-  border: 1px solid red;
   min-height: 80vh;
 }
 .register-form {
   display:flex;
   flex-direction: column;
   align-items: center;
+  background-color: #61dafb;
+  padding: 10px;
+  border-radius: 10%;
 }
 .register {
   margin: 5px;

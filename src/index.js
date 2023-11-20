@@ -3,11 +3,37 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import Home from './Home';
 import reportWebVitals from './reportWebVitals';
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import "./index.css";
+import Dashboard from './Dashboard';
+import Forgotpw from './forgotpw.js';
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/userdash/:var",
+    element: <Dashboard />,
+    loader: ({params})=>{return params}
+  },
+  {
+    path:"/test",
+    element:<h2>testing</h2>
+  },
+  {
+    path:"/forgotpw",
+    element:<Forgotpw/>
+  }
+]);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Home />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 
