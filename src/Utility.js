@@ -7,6 +7,10 @@ class Utility {
        return axios.get(base_url+"tutor/getTutors");
     };
     
+    TutorGetTutor(id){
+       return axios.get(base_url+"tutor/get/"+id);
+    };
+
     //gets the courses by tutor id
     TutorGetCourses(id){
         return axios.get(base_url+"tutor/getCourses/"+id);

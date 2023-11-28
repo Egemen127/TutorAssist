@@ -10,6 +10,7 @@ import {
 import "./index.css";
 import Dashboard from './Dashboard';
 import Forgotpw from './forgotpw.js';
+import TutorProfile from './TutorProfile.js';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,11 @@ const router = createBrowserRouter([
   {
     path:"/forgotpw",
     element:<Forgotpw/>
+  },
+  {
+    path: "/profile/tutor/:id",
+    element: <TutorProfile />,
+    loader: ({params})=>{return params}
   }
 ]);
 const root = ReactDOM.createRoot(document.getElementById('root'));

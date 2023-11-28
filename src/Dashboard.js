@@ -3,14 +3,16 @@ import './App.css';
 //import Box from '@mui/material/Box';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import {List, ListItem, Card,  Typography as Typo,Accordion,AccordionSummary, AccordionDetails} from '@mui/material';
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData,useLocation } from "react-router-dom";
 import * as React from 'react';
 import Utility from './Utility';
 
 function Dashboard(props) {
+    const { state } = useLocation();
     const [tutors,setTutors] = React.useState([]);
     const [courses,setCourses] = React.useState({});
     const [filters,setFilters] = React.useState({});
+    const [visibility,setVisibility] = React.useState(true);
     React.useEffect(()=>{
         const effect = async ()=>{
         console.log("use effect triggered");
@@ -25,6 +27,8 @@ function Dashboard(props) {
                 console.log(res);
             });
         });
+        
+        setTimeout(()=>{ setVisibility(false)}, 3000);
         }
 
         effect();
@@ -62,6 +66,10 @@ function Dashboard(props) {
     const data = useLoaderData();
     //console.log(data); .map(f=><Card> JSON.stringify(f)</Card>{JSON.stringify(courses[e.tutorId].map(c=>c.courseId))}
     return <>
+    {visibility && state &&<div>
+                <span className="close"><strong>Message!</strong></span>
+                {state.error?.map((e)=><p>{e}</p>)}
+            </div>}
     <div className='App-Header'><h1>Hello test {data.var}</h1></div>
     <div><input className='input-field' onChange={handleChange} placeholder="Course Name" name="course_name" value={filters["course_name"]}></input>
         <input className='input-field' onChange={handleChange} placeholder="Tutor Name" name="tutor_name" value={filters["tutor_name"]}></input>
@@ -73,8 +81,10 @@ function Dashboard(props) {
                 if(filterTutorCourses(e.tutorId)==0) return;
                  return (<Accordion key = {e.tutorId} elevation ={15} style= {{"text-align":"center"}}>
             <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-        ><Typo variant='h2'>{e.firstName} {e.lastName}</Typo>
+          expandIcon={<ExpandMoreIcon />}><Typo variant='h2'>
+            <a href={"/profile/tutor/"+ e.tutorId}>
+            {e.firstName} {e.lastName}
+            </a></Typo>
         <hr/>
         <Typo variant='p'>Studied at {e.college} Majored in {e.major}</Typo>
         <hr/>
