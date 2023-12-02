@@ -20,6 +20,9 @@ class Utility {
         return axios.get(base_url+"student/getStudents");
     }
 
+    StudentGetStudent(id){
+        return axios.get(base_url+"student/get/"+id);
+    }
     
 } 
 export default new Utility();

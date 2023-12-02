@@ -11,6 +11,7 @@ import "./index.css";
 import Dashboard from './Dashboard';
 import Forgotpw from './forgotpw.js';
 import TutorProfile from './TutorProfile.js';
+import StudentProfile from './StudentProfile.js';
 
 const router = createBrowserRouter([
   {
@@ -34,8 +35,14 @@ const router = createBrowserRouter([
     path: "/profile/tutor/:id",
     element: <TutorProfile />,
     loader: ({params})=>{return params}
+  },
+  {
+    path: "/profile/student/:id",
+    element: <StudentProfile />,
+    loader: ({params})=>{return params}
   }
 ]);
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

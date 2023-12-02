@@ -2,10 +2,11 @@ import './App.css';
 //import Modal from '@mui/material/Modal';
 //import Box from '@mui/material/Box';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import {List, ListItem, Card,  Typography as Typo,Accordion,AccordionSummary, AccordionDetails} from '@mui/material';
+import {List, Divider, ListItem, Button, ListItemText,Card,  Typography as Typo,Accordion,AccordionSummary, AccordionDetails} from '@mui/material';
 import { useLoaderData,useLocation } from "react-router-dom";
 import * as React from 'react';
 import Utility from './Utility';
+import MessageBox from './MessageBox';
 
 function Dashboard(props) {
     const { state } = useLocation();
@@ -13,6 +14,9 @@ function Dashboard(props) {
     const [courses,setCourses] = React.useState({});
     const [filters,setFilters] = React.useState({});
     const [visibility,setVisibility] = React.useState(true);
+    const sendMessage = (e)=>{
+        alert("sending message to "+e.target.name);
+    };
     React.useEffect(()=>{
         const effect = async ()=>{
         console.log("use effect triggered");
@@ -37,8 +41,8 @@ function Dashboard(props) {
     ,[]);
 
     const handleChange = (e)=> {
-        console.log(e.target.name + "  " + e.target.value);
-        console.log(filters);
+        //console.log(e.target.name + "  " + e.target.value);
+        //console.log(filters);
         setFilters(prev => ({...prev,[e.target.name]:e.target.value}));
          //filter by tutor
          //setTutors(prev => prev.filter(e=> `${e.firstName} ${e.lastName}` === filters["tutor_name"]));
@@ -70,7 +74,7 @@ function Dashboard(props) {
                 <span className="close"><strong>Message!</strong></span>
                 {state.error?.map((e)=><p>{e}</p>)}
             </div>}
-    <div className='App-Header'><h1>Hello test {data.var}</h1></div>
+    <div className='App-Header'><h1>Hello {data.var}</h1></div>
     <div><input className='input-field' onChange={handleChange} placeholder="Course Name" name="course_name" value={filters["course_name"]}></input>
         <input className='input-field' onChange={handleChange} placeholder="Tutor Name" name="tutor_name" value={filters["tutor_name"]}></input>
         <input className='input-field' onChange={handleChange} placeholder="Student Name" name="student_name" value={filters["student_name"]}></input>
@@ -95,7 +99,14 @@ function Dashboard(props) {
           <br/>
           <Typo>Students</Typo>
           <List>
-            {c.students.map(e=> <ListItem style= {{"text-align":"center"}}>{e.firstName} {e.lastName}</ListItem>)}
+            {c.students.map(e=> <>
+                <ListItem style= {{"text-align":"center"}}>
+                <a href={"/profile/student/"+e.studentId}><ListItemText primary={`${e.firstName} ${e.lastName}`} secondary={e.email}/></a>
+                <ListItemText primary={e.gender} secondary={`Born in ${e.birthdate}`}/>
+                <MessageBox user ={e}/>
+                </ListItem>
+                <Divider/>
+                </>)}
           </List>
           </Card>))}
           </AccordionDetails>
