@@ -4,23 +4,12 @@ import Box from '@mui/material/Box';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import Utility from './Utility';
 
 function Home() {
-  /*React.useEffect(()=>{
-   // document.outerHTML = document.outerHTML;
-    document.getElementById("password").addEventListener("keydown",(e)=>{
-      if(e.key==='Enter'){
-        e.target.name='Login'
-        clickButton(e);
-        console.log("peres enterdf");} else {
-          handleChange(e);
-        }
-        return;
-    });
-  },[]);*/
   const navigate =  useNavigate();
   const [credentials,setCredentials] = useState({username:"",password:""});
-  const [register,setRegister] = useState({});
+  const [register,setRegister] = useState({securityQues:"question 1"});
   const style = {
     position: 'absolute',
     top: '50%',
@@ -34,9 +23,10 @@ function Home() {
   };
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {if(window.confirm("Closing register window"))setOpen(false);}
+
+  //add login logic here
   const clickButton = (e)=>{
-    //add login logic here
     if(e.target.name === "Login"){
      if(!(credentials.username && credentials.password)){
       alert("Please enter your username and password");
@@ -48,9 +38,18 @@ function Home() {
       alert("Wrong username and password combination!");
       return;
      }
+    } else {
+      //register logic
+      if(register.user_type == "student")
+      Utility.StudentCreate(register).then(res=> {alert("student account created");setOpen(false);})
+    .catch(err=> alert(err.message));
+      if(register.user_type == "tutor")
+      Utility.TutorCreate(register).then(res=> {alert("tutor account created");setOpen(false);})
+    .catch(err=> alert(err.message));
     }
-    alert(e.target.name+" button is clicked");
+    
   };
+
   const handleChange = (e)=>{
     if(!open){
       setCredentials(prev=>{
@@ -108,6 +107,12 @@ empowering them for future career success.</p>
             <input className='input-field' placeholder='Username' type={'username'} onChange={handleChange}
               label='username'
               name = 'username' />
+            <input className='input-field' placeholder='First Name' type={'firstName'} onChange={handleChange}
+              label='firstName'
+              name = 'firstName' />
+            <input className='input-field' placeholder='Last Name' type={'lastName'} onChange={handleChange}
+              label='lastName'
+              name = 'lastName' />
             <input className='input-field' placeholder='Email' type={'email'} onChange={handleChange}
               label='email'
               name = 'email' />
@@ -115,17 +120,17 @@ empowering them for future career success.</p>
               name='password'/>
             <input className='input-field' placeholder='Confirm Password' type={'password'} onChange={handleChange}
               name='confirm_password'/>
-            <select className="input-field" id="q_1" onChange={handleChange}>
+            <select className="input-field" name='securityQues' id="q_1" onChange={handleChange}>
               <option value="option 1">question1</option>
               <option value="option 2">question2</option>
               </select>
             <input className='input-field' placeholder='Answer 1' type={'text'} onChange={handleChange}
               label='answer1'
-              name = 'answer1' />
+              name = 'securityAns' />
               <p>Select a user type:</p>
-            <div><input type="radio" id="student" name="user_type" onChange={handleChange} value="Student"/>
+            <div><input type="radio" id="student" name="user_type" onChange={handleChange} value="student"/>
             <label for="student">Student</label>
-            <input type="radio" id="tutor" name="user_type" onChange={handleChange} value="Tutor"/>
+            <input type="radio" id="tutor" name="user_type" onChange={handleChange} value="tutor"/>
             <label for="tutor">Tutor</label></div>
             <button className='Button' name="Submit" onClick={clickButton}>Submit</button>
             </Box>

@@ -1,12 +1,35 @@
 import {Card, TextField, Button, Divider,Modal } from "@mui/material";
 import * as React from "react";
 import './App.css';
+import Utility from "./Utility";
 
 function MessageBox(props){
     
+    const user = props.user;
+    let user_id = "";
+    if("college" in user)
+        user_id= "tutorId";
+    else
+        user_id ="studentId";
+
     const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleOpen = () => {setOpen(true);}
+    const handleClose = () => {
+        if(window.confirm("Closing the message box."))
+        setOpen(false);};
+
+    //todo: add get sender id from current context once authentication is implemented
+    const handleSend = async () => {
+        await Utility.MessageSendMessage({receiverId:user[user_id],senderId:66,content:document.getElementById("outlined-multiline-static").value}).then(res=> {
+            alert("message is sent");
+            setOpen(false);
+        }).catch(err =>{
+                 alert(err.message);
+                 console.log(err);
+                setOpen(false);
+            });
+
+    };
     
     const style = {
         position: 'absolute',
@@ -21,18 +44,18 @@ function MessageBox(props){
         p: 4,
     };
     
-    return <><Button onClick={handleOpen}>Send a message to {props.user.firstName} {props.user.lastName}</Button>
+    return <><Button onClick={handleOpen}>Send a message to {user.firstName} {user.lastName}</Button>
     <Modal open={open}  onClose={handleClose} >
         <Card style={style} component="form">
             <TextField
             id="outlined-multiline-static"
-            label="Message"
+            label={"To "+ user.firstName +" "+user.lastName}
             multiline
             rows={4}
             defaultValue="Type your message"
             />
             <Divider/>
-            <Button style={{margin:'auto'}}>Send</Button>
+            <Button style={{margin:'auto'}} onClick={handleSend}>Send</Button>
         </Card>
         </Modal>
         </>

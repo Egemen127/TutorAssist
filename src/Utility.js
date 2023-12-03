@@ -23,6 +23,17 @@ class Utility {
     StudentGetStudent(id){
         return axios.get(base_url+"student/get/"+id);
     }
+
+    MessageSendMessage(request){
+        return axios.post(base_url+"messsage/create/",request);
+    }
     
+    TutorCreate(request){
+        return axios.post(base_url+"tutor/create/",request);
+    }
+
+    StudentCreate(request){
+        return axios.post(base_url+"student/create/",request);
+    }
 } 
 export default new Utility();
