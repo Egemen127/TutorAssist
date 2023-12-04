@@ -5,6 +5,7 @@ import * as React from 'react';
 import Utility from './Utility';
 import Courses from './Courses';
 import MessageBox from './MessageBox';
+import Forum from '/.Forum';
 
 function TutorProfile(){
     var data = useLoaderData();
