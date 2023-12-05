@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Forum.css'; // Import the CSS file for styling
+import './Forum.css'; 
 
 function Forum({ user }) {
   const [posts, setPosts] = useState([]);
