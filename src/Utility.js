@@ -3,6 +3,12 @@ import axios from "axios";
 const base_url = "http://localhost:8080/";
 
 class Utility {
+    SetToken(token){
+        axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
+    };
+    Authenticate(request) {
+        return axios.post(base_url+"jwt/authenticate",request);
+    };
     TutorGetTutors(){
        return axios.get(base_url+"tutor/getTutors");
     };
@@ -33,7 +39,7 @@ class Utility {
     }
 
     StudentCreate(request){
-        return axios.post(base_url+"student/create/",request);
+        return axios.post(base_url+"student/create/",request,);
     }
 } 
 export default new Utility();

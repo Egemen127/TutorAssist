@@ -5,6 +5,7 @@ import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import Utility from './Utility';
+import axios from 'axios';
 
 function Home() {
   const navigate =  useNavigate();
@@ -32,12 +33,11 @@ function Home() {
       alert("Please enter your username and password");
       return;
      }
-     if(credentials.username === "user" & credentials.password === "password")
-     navigate("/userdash/"+credentials.username);
-     else {
-      alert("Wrong username and password combination!");
-      return;
-     }
+     if(credentials.username && credentials.password)
+      Utility.Authenticate(credentials).then(res=>{
+      Utility.SetToken(res.data.token);
+      navigate("/userdash/"+credentials.username,{state:{...res.data,error:["Successfully logged in!"],username:credentials.username}})}).catch(err=> alert(err.code+": "+err.message));
+
     } else {
       //register logic
       if(register.user_type == "student")
@@ -83,7 +83,7 @@ function Home() {
           <a href="/forgotpw">Forgot Password</a>
         </div>
       </header>
-      <body className='App-body'>
+      <div className='App-body'>
         <div className='about-us frame'>
           <h1>About Us</h1>
           <p>Unlike many existing
@@ -141,10 +141,9 @@ empowering them for future career success.</p>
           email notification.
           ● If a user forgets a password, they can reset it using their security questions.</p>
         </div>
-      </body>
+      </div>
       <footer style={{backgroundColor:"red", justifyContent:"flex-end"}}>TutorAssist.io</footer>
     </div>
   );
 }
-
 export default Home;

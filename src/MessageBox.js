@@ -20,8 +20,8 @@ function MessageBox(props){
 
     //todo: add get sender id from current context once authentication is implemented
     const handleSend = async () => {
-        await Utility.MessageSendMessage({receiverId:user[user_id],senderId:66,content:document.getElementById("outlined-multiline-static").value}).then(res=> {
-            alert("message is sent");
+        await Utility.MessageSendMessage({receiverId:user[user_id],content:document.getElementById("outlined-multiline-static").value}).then(res=> {
+            alert("message is sent: "+JSON.stringify(res.data,0,2) );
             setOpen(false);
         }).catch(err =>{
                  alert(err.message);

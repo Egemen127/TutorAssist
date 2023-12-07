@@ -1,13 +1,14 @@
 import './App.css';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import {List, Divider, ListItem, ListItemText,Card,  Typography as Typo,Accordion,AccordionSummary, AccordionDetails} from '@mui/material';
-import { useLoaderData,useLocation } from "react-router-dom";
+import { useLoaderData,useLocation, useNavigate, Link } from "react-router-dom";
 import * as React from 'react';
 import Utility from './Utility';
 import MessageBox from './MessageBox';
+import Navbar from './Navbar.js';
 
 function Dashboard(props) {
-    const { state } = useLocation();
+    const nav = useNavigate();
     const [tutors,setTutors] = React.useState([]);
     const [courses,setCourses] = React.useState({});
     const [filters,setFilters] = React.useState({});
@@ -15,11 +16,14 @@ function Dashboard(props) {
     const sendMessage = (e)=>{
         alert("sending message to "+e.target.name);
     };
+
+    const location = useLocation();
     React.useEffect(()=>{
+        Utility.SetToken(location.state.token);
         const effect = async ()=>{
         console.log("use effect triggered");
         //getting the tutors
-        const res = await Utility.TutorGetTutors().then(res=>{setTutors(res.data); return res.data;});
+        const res = await Utility.TutorGetTutors().then(res=>{setTutors(res.data); return res.data;}).catch(err=>{alert(err.message);nav("/");});
         
         //getting courses for tutors
         res.forEach(async e=> {
@@ -27,24 +31,18 @@ function Dashboard(props) {
             await Utility.TutorGetCourses(tutorId).then(res=>{
                 setCourses(prev => ({...prev,[tutorId]:res.data}));
                 console.log(res);
-            });
+            }).catch(err=>alert(err.message));
         });
         
         setTimeout(()=>{ setVisibility(false)}, 3000);
         }
 
         effect();
-        //setCourses();
     }
     ,[]);
 
     const handleChange = (e)=> {
-        //console.log(e.target.name + "  " + e.target.value);
-        //console.log(filters);
         setFilters(prev => ({...prev,[e.target.name]:e.target.value}));
-         //filter by tutor
-         //setTutors(prev => prev.filter(e=> `${e.firstName} ${e.lastName}` === filters["tutor_name"]));
-
         }
 
     const filterCourse = (course,course_name= filters["course_name"], student_name = filters["student_name"])=> {
@@ -66,13 +64,13 @@ function Dashboard(props) {
     };
         
     const data = useLoaderData();
-    //console.log(data); .map(f=><Card> JSON.stringify(f)</Card>{JSON.stringify(courses[e.tutorId].map(c=>c.courseId))}
+
     return <>
     {visibility && state &&<div>
                 <span className="close"><strong>Message!</strong></span>
                 {state.error?.map((e)=><p>{e}</p>)}
             </div>}
-    <div className='App-Header'><h1>Hello {data.var}</h1></div>
+    <Navbar username={data.var}/>
     <div><input className='input-field' onChange={handleChange} placeholder="Course Name" name="course_name" value={filters["course_name"]}></input>
         <input className='input-field' onChange={handleChange} placeholder="Tutor Name" name="tutor_name" value={filters["tutor_name"]}></input>
         <input className='input-field' onChange={handleChange} placeholder="Student Name" name="student_name" value={filters["student_name"]}></input>
@@ -81,12 +79,12 @@ function Dashboard(props) {
         {tutors.filter(f=> {if(filters["tutor_name"]?.length > 3)return `${f.firstName} ${f.lastName}`.toLowerCase().includes(filters["tutor_name"].toLowerCase()); else return true;}).map(e=> 
             { 
                 if(filterTutorCourses(e.tutorId)==0) return;
-                 return (<Accordion key = {e.tutorId} elevation ={15} style= {{"text-align":"center"}}>
+                 return (<Accordion key = {e.tutorId} elevation ={15} style= {{"textAlign":"center"}}>
             <AccordionSummary
           expandIcon={<ExpandMoreIcon />}><Typo variant='h2'>
-            <a href={"/profile/tutor/"+ e.tutorId}>
+            <Link to={"../profile/tutor/"+ e.tutorId} state={location.state}>
             {e.firstName} {e.lastName}
-            </a></Typo>
+            </Link></Typo>
         <hr/>
         <Typo variant='p'>Studied at {e.college} Majored in {e.major}</Typo>
         <hr/>
@@ -97,14 +95,14 @@ function Dashboard(props) {
           <br/>
           <Typo>Students</Typo>
           <List>
-            {c.students.map(e=> <>
-                <ListItem style= {{"text-align":"center"}}>
-                <a href={"/profile/student/"+e.studentId}><ListItemText primary={`${e.firstName} ${e.lastName}`} secondary={e.email}/></a>
+            {c.students.map(e=> <div key={e.studentId}>
+                <ListItem style= {{"textAlign":"center"}} >
+                <Link to={"../profile/student/"+ e.studentId} state={location.state}><ListItemText primary={`${e.firstName} ${e.lastName}`} secondary={e.email}/></Link>
                 <ListItemText primary={e.gender} secondary={`Born in ${e.birthdate}`}/>
                 <MessageBox user ={e}/>
                 </ListItem>
                 <Divider/>
-                </>)}
+                </div>)}
           </List>
           </Card>))}
           </AccordionDetails>
