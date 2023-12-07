@@ -19,7 +19,7 @@ function Dashboard(props) {
 
     const location = useLocation();
     React.useEffect(()=>{
-        Utility.SetToken(location.state.token);
+        Utility.SetToken(location.state?.token);
         const effect = async ()=>{
         console.log("use effect triggered");
         //getting the tutors
@@ -66,9 +66,9 @@ function Dashboard(props) {
     const data = useLoaderData();
 
     return <>
-    {visibility && state &&<div>
+    {visibility && location.state &&<div>
                 <span className="close"><strong>Message!</strong></span>
-                {state.error?.map((e)=><p>{e}</p>)}
+                {location.state?.error?.map((e)=><p>{e}</p>)}
             </div>}
     <Navbar username={data.var}/>
     <div><input className='input-field' onChange={handleChange} placeholder="Course Name" name="course_name" value={filters["course_name"]}></input>
