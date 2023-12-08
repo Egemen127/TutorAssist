@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Forum.css'; 
+import Navbar from './Navbar';
 
 function Forum({ user }) {
   const [posts, setPosts] = useState([]);
@@ -70,7 +71,8 @@ function Forum({ user }) {
     setPosts(filteredPosts);
   };
 
-  return (
+  return (<>
+    <Navbar username={user.username}/>
     <div className="forum-container">
       <div className="post-creator">
         <textarea
@@ -131,6 +133,7 @@ function Forum({ user }) {
         ))}
       </div>
     </div>
+    </>
   );
 }
 

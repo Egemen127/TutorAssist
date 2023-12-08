@@ -14,6 +14,7 @@ import TutorProfile from './TutorProfile.js';
 import StudentProfile from './StudentProfile.js';
 import Forum from "./Forum.js";
 
+function App(){
 const router = createBrowserRouter([
   {
     path: "/",
@@ -44,16 +45,17 @@ const router = createBrowserRouter([
   },
   {
     path: "/forum",
-    element: <Forum user={{username:"test"}}/>
-    //loader: ({params})=>{return params}
+    element: <Forum user={{username:"test"}}/>,
+    loader: ({params})=>{return params}
   }
 ]);
-
+  return (<React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>)
+}
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+  <App/>
 );
 
 // If you want to start measuring performance in your app, pass a function

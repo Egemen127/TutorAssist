@@ -13,15 +13,11 @@ function Dashboard(props) {
     const [courses,setCourses] = React.useState({});
     const [filters,setFilters] = React.useState({});
     const [visibility,setVisibility] = React.useState(true);
-    const sendMessage = (e)=>{
-        alert("sending message to "+e.target.name);
-    };
-
     const location = useLocation();
+
     React.useEffect(()=>{
-        Utility.SetToken(location.state?.token);
+        Utility.SetToken(localStorage.getItem("jwt"));
         const effect = async ()=>{
-        console.log("use effect triggered");
         //getting the tutors
         const res = await Utility.TutorGetTutors().then(res=>{setTutors(res.data); return res.data;}).catch(err=>{alert(err.message);nav("/");});
         
@@ -70,7 +66,7 @@ function Dashboard(props) {
                 <span className="close"><strong>Message!</strong></span>
                 {location.state?.error?.map((e)=><p>{e}</p>)}
             </div>}
-    <Navbar username={data.var}/>
+    <Navbar/>
     <div><input className='input-field' onChange={handleChange} placeholder="Course Name" name="course_name" value={filters["course_name"]}></input>
         <input className='input-field' onChange={handleChange} placeholder="Tutor Name" name="tutor_name" value={filters["tutor_name"]}></input>
         <input className='input-field' onChange={handleChange} placeholder="Student Name" name="student_name" value={filters["student_name"]}></input>

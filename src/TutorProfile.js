@@ -13,22 +13,28 @@ function TutorProfile(){
     var nav = useNavigate();
     var location = useLocation();
     var [tutor,setTutor] = React.useState({});
-    
+    console.log(data);
     React.useEffect(
         ()=>{
-            Utility.SetToken(location.state.token);
+            const my_effect = async ()=>{
+            const my_token = await localStorage.getItem("jwt");
             Utility.TutorGetTutor(data.id)
             .then(res=> setTutor(res.data))
-            .catch(data=>{ nav("/userdash/test",{state:{error:["Something went wrong with the request. Navigating to the dashboard."]}}); console.log("Something went wrong with the request. Navigating to the dashboard."); console.log(data)}); //navigate to an error page
-
+            .catch(err=>{ 
+                alert(err.code+" "+err.message+".Navigating to home page.");
+                nav("/"); 
+            }); 
             Utility.TutorGetCourses(data.id)
             .then(res=> setTutor(prev=>{return {...prev,courses:res.data}}))
-            .catch(data=>{ nav("/userdash/test",{state:{error:["Something went wrong with the request. Navigating to the dashboard."]}}); console.log(); console.log(data)});
-        },[]
+            .catch(data=>{ nav("/userdash/test",{state:{error:["Something went wrong with the request. Navigating to userdash."]}});});
+        }
+
+        my_effect();
+    },[]
     );
     
     return <div style={{textAlign:"center"}}>
-    <Navbar username={location.state.username}/>
+    <Navbar/>
     <Typo variant='h1'>{tutor.firstName} {tutor.lastName}</Typo>
     <Typo variant='subtitle1'>{tutor.email}</Typo>
     <Typo variant='p'>Graduated from {tutor.college} Majored in {tutor.major}, {tutor.degreeType}</Typo>

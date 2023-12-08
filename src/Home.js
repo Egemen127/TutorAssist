@@ -3,9 +3,8 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import Utility from './Utility';
-import axios from 'axios';
 
 function Home() {
   const navigate =  useNavigate();
@@ -33,10 +32,13 @@ function Home() {
       alert("Please enter your username and password");
       return;
      }
-     if(credentials.username && credentials.password)
-      Utility.Authenticate(credentials).then(res=>{
-      Utility.SetToken(res.data.token);
-      navigate("/userdash/"+credentials.username,{state:{...res.data,error:["Successfully logged in!"],username:credentials.username}})}).catch(err=> alert(err.code+": "+err.message));
+     if(credentials.username && credentials.password){
+        Utility.Authenticate(credentials).then(res=>{
+        //using localstorage to store jwt & username
+        localStorage.setItem("jwt",res.data.token);
+        localStorage.setItem("username",res.data.currentUser.username);
+        navigate("/userdash/"+credentials.username,{state:{error:["Successfully logged in!"],username:credentials.username}})}).catch(err=> alert(err.code+": "+err.message));
+    }
 
     } else {
       //register logic
@@ -55,7 +57,6 @@ function Home() {
       setCredentials(prev=>{
       return {...prev,[e.target.name]:e.target.value};
       });
-      console.log("current name&password "+credentials.username+" "+credentials.password);
     }else {
       setRegister(prev=>{
       return {...prev,[e.target.name]:e.target.value};
