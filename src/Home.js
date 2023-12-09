@@ -38,16 +38,16 @@ function Home() {
         localStorage.setItem("jwt",res.data.token);
         localStorage.setItem("username",res.data.currentUser.username);
         navigate("/userdash/"+credentials.username,{state:{error:["Successfully logged in!"],username:credentials.username}})}).catch(err=> alert(err.code+": "+err.message));
-    }
-
-    } else {
+      }
+    } 
+    else {
       //register logic
       if(register.user_type == "student")
-      Utility.StudentCreate(register).then(res=> {alert("student account created");setOpen(false);})
-    .catch(err=> console.log(JSON.stringify(register,0,2)));
+        Utility.StudentCreate(register).then(res=> {alert("student account created");setOpen(false);})
+        .catch(err=> console.log(JSON.stringify(register,0,2)));
       if(register.user_type == "tutor")
-      Utility.TutorCreate(register).then(res=> {alert("tutor account created");setOpen(false);})
-    .catch(err=> console.log(JSON.stringify(register,0,2)));
+        Utility.TutorCreate(register).then(res=> {alert("tutor account created");setOpen(false);})
+        .catch(err=> console.log(JSON.stringify(register,0,2)));
     }
     
   };
@@ -57,7 +57,8 @@ function Home() {
       setCredentials(prev=>{
       return {...prev,[e.target.name]:e.target.value};
       });
-    }else {
+    }
+    else {
       setRegister(prev=>{
       return {...prev,[e.target.name]:e.target.value};
       });
@@ -88,13 +89,14 @@ function Home() {
         <div className='about-us frame'>
           <h1>About Us</h1>
           <p>Unlike many existing
-tutoring applications that require costly subscriptions and lack the assurance of tutor
-accreditation, our platform caters to students of all socioeconomic levels, offering them
-high-quality, personalized tutoring in a range of subjects. Our application enables students to
-search for tutors based on subject expertise, availability, and ratings, facilitating an engaging and
-seamless learning experience. From K-12 to higher education, our core objective is to enhance
-the knowledge and skills of students, not only improving their academic performance but also
-empowering them for future career success.</p>
+            tutoring applications that require costly subscriptions and lack the assurance of tutor
+            accreditation, our platform caters to students of all socioeconomic levels, offering them
+            high-quality, personalized tutoring in a range of subjects. Our application enables students to
+            search for tutors based on subject expertise, availability, and ratings, facilitating an engaging and
+            seamless learning experience. From K-12 to higher education, our core objective is to enhance
+            the knowledge and skills of students, not only improving their academic performance but also
+            empowering them for future career success.
+          </p>
         </div>
         <div className='register frame'>
           <Modal

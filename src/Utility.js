@@ -38,8 +38,12 @@ class Utility {
         return axios.post(base_url+"tutor/create/",request);
     }
 
-    StudentCreate(request){
-        return axios.post(base_url+"student/create/",request,);
+    TutorUpdate(request) {
+        return axios.put(base_url+"tutor/update/",request);
+    }
+
+    StudentUpdate(request){
+        return axios.put(base_url+"student/update/",request,);
     }
 
     MyProfile(){

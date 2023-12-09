@@ -21,7 +21,7 @@ function Dashboard(props) {
             Utility.SetToken(my_token);
             //getting the tutors
             const res = await Utility.TutorGetTutors().then(res=>{setTutors(res.data); return res.data;}).catch(err=>{console.log(err);alert(err.code+" "+err.message);nav("/");});
-            
+
             //getting courses for tutors
             res?.forEach(async e=> {
                 var tutorId = e.tutorId;
