@@ -16,21 +16,22 @@ function Dashboard(props) {
     const location = useLocation();
 
     React.useEffect(()=>{
-        Utility.SetToken(localStorage.getItem("jwt"));
         const effect = async ()=>{
-        //getting the tutors
-        const res = await Utility.TutorGetTutors().then(res=>{setTutors(res.data); return res.data;}).catch(err=>{alert(err.message);nav("/");});
-        
-        //getting courses for tutors
-        res.forEach(async e=> {
-            var tutorId = e.tutorId;
-            await Utility.TutorGetCourses(tutorId).then(res=>{
-                setCourses(prev => ({...prev,[tutorId]:res.data}));
-                console.log(res);
-            }).catch(err=>alert(err.message));
-        });
-        
-        setTimeout(()=>{ setVisibility(false)}, 3000);
+            const my_token = await localStorage.getItem("jwt");
+            Utility.SetToken(my_token);
+            //getting the tutors
+            const res = await Utility.TutorGetTutors().then(res=>{setTutors(res.data); return res.data;}).catch(err=>{console.log(err);alert(err.code+" "+err.message);nav("/");});
+            
+            //getting courses for tutors
+            res?.forEach(async e=> {
+                var tutorId = e.tutorId;
+                await Utility.TutorGetCourses(tutorId).then(res=>{
+                    setCourses(prev => ({...prev,[tutorId]:res.data}));
+                    console.log(res);
+                }).catch(err=>{console.log(err);alert(err.code+" "+err.message)});
+            });
+            
+            setTimeout(()=>{ setVisibility(false)}, 3000);
         }
 
         effect();

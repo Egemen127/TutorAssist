@@ -13,6 +13,7 @@ import Forgotpw from './forgotpw.js';
 import TutorProfile from './TutorProfile.js';
 import StudentProfile from './StudentProfile.js';
 import Forum from "./Forum.js";
+import MyProfile from './MyProfile.js';
 
 function App(){
 const router = createBrowserRouter([
@@ -46,6 +47,11 @@ const router = createBrowserRouter([
   {
     path: "/forum",
     element: <Forum user={{username:"test"}}/>,
+    loader: ({params})=>{return params}
+  },
+  {
+    path: "/myProfile",
+    element: <MyProfile />,
     loader: ({params})=>{return params}
   }
 ]);

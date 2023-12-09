@@ -14,5 +14,5 @@ function Navbar(props) {
         localStorage.removeItem("username");
     };
 
-    return<navbar style={style}><Typo variant="h3">Hello {localStorage.getItem("username")}</Typo><button>My Messages</button><button>My Profile</button><Link to="../forum"><button>Forum</button></Link><Link onClick={handleClick} to="../"><button>Logout</button></Link></navbar>
+    return <navbar style={style}><Link to={"../userdash/"+localStorage.getItem("username")}><Typo variant="h3">Hello {localStorage.getItem("username")}</Typo></Link><button>My Messages</button><Link to="../myProfile"><button>My Profile</button></Link><Link to="../forum"><button>Forum</button></Link><Link onClick={handleClick} to="../"><button>Logout</button></Link></navbar>
 } export default Navbar

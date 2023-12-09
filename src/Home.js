@@ -44,10 +44,10 @@ function Home() {
       //register logic
       if(register.user_type == "student")
       Utility.StudentCreate(register).then(res=> {alert("student account created");setOpen(false);})
-    .catch(err=> alert(err.message));
+    .catch(err=> console.log(JSON.stringify(register,0,2)));
       if(register.user_type == "tutor")
       Utility.TutorCreate(register).then(res=> {alert("tutor account created");setOpen(false);})
-    .catch(err=> alert(err.message));
+    .catch(err=> console.log(JSON.stringify(register,0,2)));
     }
     
   };

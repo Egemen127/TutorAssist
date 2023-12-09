@@ -41,5 +41,9 @@ class Utility {
     StudentCreate(request){
         return axios.post(base_url+"student/create/",request,);
     }
+
+    MyProfile(){
+        return axios.get(base_url+"jwt/myProfile/");
+    }
 } 
 export default new Utility();
