@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Button } from '@mui/material';
+import './RatingInput.css'; 
 
 function RatingInput({ courseId, onRatingChange }) {
   const [showModal, setShowModal] = useState(false);
