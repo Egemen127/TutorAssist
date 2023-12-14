@@ -34,6 +34,10 @@ class Utility {
         return axios.post(base_url+"messsage/create/",request);
     }
     
+    MessageAllMessages(request){
+        return axios.get(base_url+"messsage/allMessages/",request);
+    }
+
     TutorCreate(request){
         return axios.post(base_url+"tutor/create/",request);
     }

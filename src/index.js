@@ -14,6 +14,7 @@ import TutorProfile from './TutorProfile.js';
 import StudentProfile from './StudentProfile.js';
 import Forum from "./Forum.js";
 import MyProfile from './MyProfile.js';
+import MyMessages from './MyMessages.js';
 
 function App(){
 const router = createBrowserRouter([
@@ -52,6 +53,11 @@ const router = createBrowserRouter([
   {
     path: "/myProfile",
     element: <MyProfile />,
+    loader: ({params})=>{return params}
+  },
+  {
+    path: "/myMessages",
+    element: <MyMessages />,
     loader: ({params})=>{return params}
   }
 ]);

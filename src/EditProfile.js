@@ -93,7 +93,9 @@ function EditProfile(props){
       <DialogTitle>Change Password</DialogTitle>
       <DialogContent>
         <form>
-          <TextField autoFocus margin="normal" type="password" label="test" id="edit_pw" name="password" fullWidth label="New Password" variant="standard"/>
+           <TextField autoFocus margin="normal" type="password" id="current_pw" name="enter-password" fullWidth label="Enter Password" variant="standard"/>
+            <TextField margin="normal" type="password" id="confirm_pw" name="confirm-password" fullWidth label="Confirm Password" variant="standard"/>
+          <TextField margin="normal" type="password" id="edit_pw" name="password" fullWidth label="New Password" variant="outlined"/>
          </form>
       </DialogContent>
       <DialogActions>
