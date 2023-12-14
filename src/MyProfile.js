@@ -8,6 +8,7 @@ import MessageBox from './MessageBox';
 import Forum from './Forum';
 import Navbar from './Navbar';
 import EditProfile from './EditProfile.js';
+import RatingInput from './RatingInput'; 
 
 function MyProfile(){
     var data = useLoaderData();
