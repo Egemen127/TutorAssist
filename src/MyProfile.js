@@ -45,6 +45,26 @@ function MyProfile(){
             my_effect();
         },[nav]
     );
+
+    //Rating Feature 
+    const MyProfile = () => {
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const handleRatingSubmit = (data) => {
+    // Handle the submitted rating and comment data here
+    console.log('Submitted:', data);
+    // Close the modal after submission
+    closeModal();
+  };
+    // End of Rating Feature 
     
     return <div style={{textAlign:"center"}}>
     <Navbar/>
@@ -56,4 +76,20 @@ function MyProfile(){
     {/*Passing the user to display their info in the message box*/} 
     <EditProfile user={tutor} isTutor={"tutorId" in tutor}/>
     </div>
+
+    // Rating Feature Return
+    <div className="profile">
+      <h1>Welcome to Your Profile</h1>
+      {/* Clickable rating option */}
+      <button onClick={openModal}>Rate Courses/Tutors</button>
+      {/* Show the rating modal when showModal state is true */}
+      {showModal && (
+        <RatingModal onClose={closeModal} onSubmit={handleRatingSubmit} />
+      )}
+      {/* Other profile content */}
+    </div>
+  );
+};
+    // End of Rating Feature Return 
+
 } export default MyProfile
