@@ -53,28 +53,7 @@ function MyProfile(){
     {/*<Typo variant='p'>Graduated from {tutor.college} Majored in {tutor.major}, {tutor.degreeType}</Typo>*/}
     <Typo variant='h2'>My Courses</Typo>
     <Courses courses={tutor.courses} isTutor={"tutorId" in tutor} myProfile={true}/>
-    {/*Passing the user to display their info in the message box*/}
-
-        // RatingInput NB 
-    <div key={course.id}>
-        <Typography variant="h4">{course.title}</Typography>
-        <Typography>{course.description}</Typography>
-        {/* ratingUI: Display RatingInput for each course */}
-        {"tutorId" in tutor && (
-            // ratingUI: Start - RatingInput component
-            <RatingInput
-            courseId={course.id}
-            onRatingChange={(courseId, rating) => {
-                // ratingUI: Logic to handle the change in course rating
-                console.log(`Course ID: ${courseId}, Rating: ${rating}`);
-                // ratingUI: Update state or perform backend call as needed
-            }}
-        />
-        // ratingUI: End - RatingInput component
-    )}
-</div>
-))} //End of RatingInput Return
-  
+    {/*Passing the user to display their info in the message box*/} 
     <EditProfile user={tutor} isTutor={"tutorId" in tutor}/>
     </div>
 } export default MyProfile
