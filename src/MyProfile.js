@@ -10,6 +10,28 @@ import Navbar from './Navbar';
 import EditProfile from './EditProfile.js';
 import RatingInput from './RatingInput'; 
 
+// NATE WHAT DOES THIS CODE HAS SOME ERRORS NEEDS FIXING!!
+//         // RatingInput NB 
+//         <div key={course.id}>
+//         <Typo variant="h4">{course.title}</Typo>
+//         <Typo>{course.description}</Typo>
+//         {/* ratingUI: Display RatingInput for each course */}
+//         {"tutorId" in tutor && (
+//             // ratingUI: Start - RatingInput component
+//             <RatingInput
+//             courseId={course.id}
+//             onRatingChange={(courseId, rating) => {
+//                 // ratingUI: Logic to handle the change in course rating
+//                 console.log(`Course ID: ${courseId}, Rating: ${rating}`);
+//                 // ratingUI: Update state or perform backend call as needed
+//             }}
+//         />
+//         // ratingUI: End - RatingInput component
+//     )}
+// </div>
+// ))} //End of RatingInput Return
+
+
 function MyProfile(){
     var data = useLoaderData();
     var nav = useNavigate();
@@ -55,25 +77,7 @@ function MyProfile(){
     <Courses courses={tutor.courses} isTutor={"tutorId" in tutor} myProfile={true}/>
     {/*Passing the user to display their info in the message box*/}
 
-        // RatingInput NB 
-    <div key={course.id}>
-        <Typography variant="h4">{course.title}</Typography>
-        <Typography>{course.description}</Typography>
-        {/* ratingUI: Display RatingInput for each course */}
-        {"tutorId" in tutor && (
-            // ratingUI: Start - RatingInput component
-            <RatingInput
-            courseId={course.id}
-            onRatingChange={(courseId, rating) => {
-                // ratingUI: Logic to handle the change in course rating
-                console.log(`Course ID: ${courseId}, Rating: ${rating}`);
-                // ratingUI: Update state or perform backend call as needed
-            }}
-        />
-        // ratingUI: End - RatingInput component
-    )}
-</div>
-))} //End of RatingInput Return
+
   
     <EditProfile user={tutor} isTutor={"tutorId" in tutor}/>
     </div>
