@@ -19,8 +19,15 @@ function EditProfile(props){
     setPwOpen(true);
   };
 
-  const[formData, setFormData] = useState(props.user);
-  useEffect(()=>{setFormData(props.user);},[]);
+  const[formData, setFormData] = useState({});
+  useEffect(()=>{
+    const effect = async () =>{
+      const my_token = await localStorage.getItem("jwt");
+      Utility.SetToken(my_token);
+      await Utility.MyProfile().then(res=> setFormData(res.data));
+    }
+    effect();
+  },[]);
 
   const handleChange = (e)=>{
     setFormData(prev=>({...prev,[e.target.name]:e.target.value}));
@@ -32,14 +39,16 @@ function EditProfile(props){
     setOpen(false);
     setPwOpen(false);
   };
-  const submitForm = (e) =>{
+  const submitForm = async (e) =>{
     e.preventDefault();
-    alert("todo: add submit logic, api needs an update!!Add confirm fields to pw form."+JSON.stringify(formData,0,2));
-    return;
-    if("tutorId" in props)
-        Utility.TutorUpdate(formData);
+    
+    if("tutorId" in formData)
+        Utility.TutorUpdate(formData).then(res=>{alert(res.data);handleClose();}).catch(err=>alert(err.message));
     else
-        Utility.StudentUpdate(formData);
+        Utility.StudentUpdate(formData).then(res=>{alert(res.data);handleClose();}).catch(err=>alert(err.message));
+    
+    //await Utility.MyProfile().then(res=> {setFormData(res.data); handleClose()});
+    
   }
   let formItems=[
     {label:"Email Address",type:"email",id:"edit-email",name:"email"},
@@ -78,8 +87,8 @@ function EditProfile(props){
                 type={e.type}
                 fullWidth
                 variant="standard"
-                onChange={handleChange}
-                defaultValue={props.user[e.name]}
+                onChange={handleChange} 
+               // placeholder={props.user[e.name]}
                 value={formData[e.name]}
             />))}
           </form>

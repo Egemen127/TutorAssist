@@ -71,7 +71,7 @@ function MyProfile(){
     <Navbar/>
     <Typo variant='h1'>{tutor.firstName} {tutor.lastName}</Typo>
     <Typo variant='subtitle1'>{tutor.email}</Typo>
-    <Typo variant='p'>Graduated from {tutor.college} Majored in {tutor.major}, {tutor.degreeType}</Typo>
+    {"tutorId" in tutor && <Typo variant='p'>Graduated from {tutor.college} Majored in {tutor.major}, {tutor.degreeType}</Typo>}
     <Typo variant='h2'>My Courses</Typo>
     <Courses courses={tutor.courses} isTutor={"tutorId" in tutor} myProfile={true}/>
     {/*Passing the user to display their info in the message box*/} 

@@ -2,11 +2,7 @@ import {List, ListItem, ListItemText, Divider} from "@mui/material";
 import MessageBox from "./MessageBox";
 
 function ChatHistory(props){
-    console.log(props.user_info[54]);
-    console.log(props.user_info);
-    console.log(props.chat);
     return (<>
-       
             {props.chat.map(e=> <div>
                  <List>
                     {e.correspondence.map(f=>(
