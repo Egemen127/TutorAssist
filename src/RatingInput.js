@@ -1,43 +1,43 @@
 import React, { useState } from 'react';
-import { Modal, Button } from '@mui/material';
-import './RatingInput.css'; 
+import StarRating from './StarRating';
+import { DialogContent, DialogTitle,DialogActions } from '@mui/material';
 
-function RatingInput({ courseId, onRatingChange }) {
-  const [showModal, setShowModal] = useState(false);
-  const [selectedRating, setSelectedRating] = useState(0); // State to hold selected rating
+const RatingModal = ({ onClose, onSubmit }) => {
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState('');
 
-  const handleRatingChange = (rating) => {
-    setSelectedRating(rating);
+  const handleRatingChange = (newRating) => {
+    setRating(newRating);
   };
 
-  const handleSubmitRating = () => {
-    onRatingChange(courseId, selectedRating);
-    setShowModal(false);
-    // Optionally, perform backend update (API request) to store the new rating - Utility.SubmitCourseRating(courseId, selectedRating);
+  const handleCommentChange = (event) => {
+    setComment(event.target.value);
+  };
+
+  const handleSubmit = () => {
+    onSubmit({ rating, comment });
   };
 
   return (
-    <div>
-      {/* Button to trigger the rating input */}
-      <Button onClick={() => setShowModal(true)}>Rate Course</Button>
-
-      {/* Modal for rating input */}
-      <Modal open={showModal} onClose={() => setShowModal(false)}>
-        <div style={{ backgroundColor: 'white', padding: '20px' }}>
-          <h2>Rate this course</h2>
-          <div>
-            <button onClick={() => handleRatingChange(1)}>1 star</button>
-            <button onClick={() => handleRatingChange(2)}>2 stars</button>
-            <button onClick={() => handleRatingChange(3)}>3 stars</button>
-            <button onClick={() => handleRatingChange(4)}>4 stars</button>
-            <button onClick={() => handleRatingChange(5)}>5 stars</button>
-          </div>
-          <Button onClick={handleSubmitRating}>Submit Rating</Button>
-        </div>
-      </Modal>
+    <div className="modal">
+      <div className="modal-content">
+        <span className="close" style={{"cursor":"pointer"}}onClick={onClose}>&times;</span>
+        <DialogTitle><h2>Rate Course/Professor</h2></DialogTitle>
+        <DialogContent>
+          <StarRating onChange={handleRatingChange} />
+        <textarea
+          placeholder="Leave your feedback here..."
+          value={comment}
+          onChange={handleCommentChange}
+        />
+        </DialogContent>
+        <DialogActions>
+        <button onClick={handleSubmit}>Submit</button>
+        </DialogActions>
+      </div>
     </div>
   );
-}
+};
 
-export default RatingInput;
+export default RatingModal;
 

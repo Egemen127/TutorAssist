@@ -11,7 +11,7 @@ function ChatHistory(props){
                  <List>
                     {e.correspondence.map(f=>(
                 <ListItem style= {{"textAlign":"center"}} >
-                <ListItemText primary={`From ${props.user_info[f.senderId].firstName} To ${props.user_info[f.receiverId].firstName}`} secondary={f.createDt}/>
+                <ListItemText primary={`From ${props.user_info[f.senderId].firstName} To ${props.user_info[f.receiverId].firstName}`} secondary={new Date(f.createDt).toString()}/>
                 <ListItemText primary={`${f.content}`} />
                 </ListItem>))}
                 <MessageBox user ={props.user_info[e.userId]}/>
