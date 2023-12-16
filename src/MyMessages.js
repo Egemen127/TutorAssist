@@ -21,11 +21,12 @@ function MyMessages(){
             var processed_data_arr=[];
             var user_info={};
             var my_id;
-            if(res.sent)
+            if(res.sent?.length > 0)
             my_id = res.sent[0].senderId;
-            else
+            if(res.recieved?.length > 0)
              my_id = res.recieved[0].receiverId;
-
+            
+            if(my_id)
             //adding current user to the list
             await Utility.StudentGetStudent(my_id).then(res=>{user_info[my_id]=res.data}).catch(err=> Utility.TutorGetTutor(my_id).then(res=>{user_info[my_id]=res.data}));
 
