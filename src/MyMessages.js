@@ -82,6 +82,7 @@ function MyMessages(){
     },[]);
     return (<>
         <Navbar/>
+         {messages.length == 0 && <Typo style={{textAlign:"center"}}variant="h1">No Messages</Typo>}
         <ChatHistory chat={messages} user_info={userInfo}/>
     </>);
 } export default MyMessages
