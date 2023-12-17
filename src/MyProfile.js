@@ -11,6 +11,7 @@ import EditProfile from './EditProfile.js';
 import RatingInput from './RatingInput'; 
 import RatingModal from './RatingInput';
 import CreateCourse from './CreateCourse.js';
+import Registration from './Registration.js';
 
 function MyProfile(){
     var data = useLoaderData();
@@ -18,16 +19,9 @@ function MyProfile(){
     var location = useLocation();
     //useState to keep current user info
     var [tutor,setTutor] = React.useState({});
-
     var [open,setOpen] = React.useState(false);
     var [courseOpen,setCourseOpen] = React.useState(false);
-    const handleOpen = (e)=>{
-      if(e.target.name=="create-course") {
-        setCourseOpen(true);
-        return;
-      }
-      setOpen(true);
-    }
+    var [registration,setRegistration] = React.useState();
 
     console.log(data);
     React.useEffect(
@@ -45,12 +39,17 @@ function MyProfile(){
                 console.log("me: ");
                 console.log(res);
                 console.log(tutor.tutorId);
-                if("tutorId" in res.data)
-                await Utility.TutorGetCourses(res.data.tutorId)
-                .then(res=> setTutor(prev=>{return {...prev,courses:res.data}}))
-                .catch(data=> {
-                     nav("/userdash/test",{state:{error:["Something went wrong with the request. Navigating to userdash."]}});
-                });
+                if("tutorId" in res.data){
+                  await Utility.TutorGetCourses(res.data.tutorId)
+                  .then(res=> setTutor(prev=>{return {...prev,courses:res.data}}))
+                  .catch(data=> {
+                      nav("/userdash/test",{state:{error:["Something went wrong with the request. Navigating to userdash."]}});
+                  });
+                  await Utility.RegisterationAllPending(res.data.tutorId).then(res=> setRegistration(res.data)).catch(err=> alert(err.message));
+                }
+                else {
+                  await Utility.RegisterationAllStudentReg(res.data.studentId).then(res=> setRegistration(res.data)).catch(err=> alert(err.message));
+                }
             }
 
             my_effect();
@@ -89,6 +88,8 @@ function MyProfile(){
     <EditProfile user={tutor} isTutor={"tutorId" in tutor}/>
     {/*opens a form for course creation*/}
     {"tutorId" in tutor && <><br/><CreateCourse/></>}
+    <Registration registration={registration} isTutor={"tutorId" in tutor}/>
+    
     </div>
     <div className="profile">
       <h1>Welcome to Your Profile</h1>

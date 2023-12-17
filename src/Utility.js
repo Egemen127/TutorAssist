@@ -22,6 +22,10 @@ class Utility {
         return axios.post(base_url+"Course/delete/"+courseId);
     }
 
+    CourseGet(course_id){
+        return axios.get(base_url+"Course/get/"+course_id);
+    }
+
     TutorGetTutors(){
        return axios.get(base_url+"tutor/getTutors");
     };
@@ -67,5 +71,24 @@ class Utility {
         return axios.get(base_url+"messsage/allMessages/",request);
     }
 
+    RegisterationRegister(course_id){
+        return axios.post(base_url+"registration/register/"+course_id)
+    }
+
+    RegisterationAccept(reg_id){
+        return axios.post(base_url+"registration/accept/"+reg_id)
+    }
+
+    RegisterationReject(reg_id){
+        return axios.post(base_url+"registration/reject/"+reg_id)
+    }
+
+    RegisterationAllPending(tutor_id){
+        return axios.get(base_url+"registration/Allpending/"+tutor_id)
+    }
+
+    RegisterationAllStudentReg(student_id){
+        return axios.get(base_url+"registration/AllStudentReg/"+student_id)
+    }
 } 
 export default new Utility();
