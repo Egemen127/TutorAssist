@@ -1,5 +1,5 @@
 import './App.css';
-import {Button, Typography as Typo, Modal, Card, Dialog} from '@mui/material';
+import {Button, Typography as Typo, TextField,Dialog,DialogActions,DialogContent,DialogTitle} from '@mui/material';
 import { useLoaderData, useNavigate, useLocation } from "react-router-dom";
 import * as React from 'react';
 import Utility from './Utility';
@@ -17,7 +17,14 @@ function MyProfile(){
     var location = useLocation();
     var [tutor,setTutor] = React.useState({});
     var [open,setOpen] = React.useState(false);
-    const openModal = ()=>setOpen(true);
+    var [courseOpen,setCourseOpen] = React.useState(false);
+    const handleOpen = (e)=>{
+      if(e.target.name=="create-course") {
+        setCourseOpen(true);
+        return;
+      }
+      setOpen(true);
+    }
 
     console.log(data);
     React.useEffect(
@@ -57,6 +64,7 @@ function MyProfile(){
 
   const closeModal = () => {
     setShowModal(false);
+    setCourseOpen(false);
   };
 
   const handleRatingSubmit = (data) => {
@@ -76,8 +84,23 @@ function MyProfile(){
     <Courses courses={tutor.courses} isTutor={"tutorId" in tutor} myProfile={true}/>
     {/*Passing the user to display their info in the message box*/} 
     <EditProfile user={tutor} isTutor={"tutorId" in tutor}/>
+    {/*opens a form for course creation*/}
+    {"tutorId" in tutor && <><br/><Button name="create-course" onClick={handleOpen}>Create Course</Button></>}
+    <Dialog open={courseOpen}> 
+      <DialogTitle>Create Course</DialogTitle>
+      <DialogContent>
+        <form>
+           <TextField autoFocus margin="normal" type="password"  id="current_pw" name="password" fullWidth label="Course Name" variant="standard"/>
+           <TextField margin="normal"  label="Start Date" type="date" id="start_dt" name="startDt" fullWidth  variant="outlined" value={Date.now.toString()}/>
+            <TextField margin="normal" label="End Date" type="date" id="end_dt" name="endDt" fullWidth  variant="outlined" value={Date.now.toString()}/>
+         </form>
+      </DialogContent>
+      <DialogActions>
+          <Button >Submit</Button>
+          <Button onClick={closeModal}>Cancel</Button>
+      </DialogActions>
+    </Dialog>
     </div>
-
     <div className="profile">
       <h1>Welcome to Your Profile</h1>
       {/* Clickable rating option */}
