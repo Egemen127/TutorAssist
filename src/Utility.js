@@ -43,13 +43,16 @@ class Utility {
     }
 
     TutorUpdate(request) {
-        return axios.put(base_url+"tutor/update/",request);
+        return axios.post(base_url+"tutor/update/",request);
     }
 
     StudentUpdate(request){
-        return axios.put(base_url+"student/update/",request,);
+        return axios.post(base_url+"student/update/",request);
     }
 
+    StudentCreate(request){
+        return axios.post(base_url+"student/create/",request);
+    }
     MyProfile(){
         return axios.get(base_url+"jwt/myProfile/");
     }
