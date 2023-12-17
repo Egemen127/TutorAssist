@@ -1,5 +1,5 @@
 import './App.css';
-import {Button, Typography as Typo, Modal, Card, Dialog} from '@mui/material';
+import {Button, Typography as Typo, TextField,Dialog,DialogActions,DialogContent,DialogTitle} from '@mui/material';
 import { useLoaderData, useNavigate, useLocation } from "react-router-dom";
 import * as React from 'react';
 import Utility from './Utility';
@@ -10,6 +10,7 @@ import Navbar from './Navbar';
 import EditProfile from './EditProfile.js';
 import RatingInput from './RatingInput'; 
 import RatingModal from './RatingInput';
+import CreateCourse from './CreateCourse.js';
 
 // NATE WHAT DOES THIS CODE HAS SOME ERRORS NEEDS FIXING!!
 //         // RatingInput NB 
@@ -37,9 +38,18 @@ function MyProfile(){
     var data = useLoaderData();
     var nav = useNavigate();
     var location = useLocation();
+    //useState to keep current user info
     var [tutor,setTutor] = React.useState({});
+
     var [open,setOpen] = React.useState(false);
-    const openModal = ()=>setOpen(true);
+    var [courseOpen,setCourseOpen] = React.useState(false);
+    const handleOpen = (e)=>{
+      if(e.target.name=="create-course") {
+        setCourseOpen(true);
+        return;
+      }
+      setOpen(true);
+    }
 
     console.log(data);
     React.useEffect(
@@ -79,6 +89,7 @@ function MyProfile(){
 
   const closeModal = () => {
     setShowModal(false);
+    setCourseOpen(false);
   };
 
   const handleRatingSubmit = (data) => {
@@ -98,8 +109,9 @@ function MyProfile(){
     <Courses courses={tutor.courses} isTutor={"tutorId" in tutor} myProfile={true}/>
     {/*Passing the user to display their info in the message box*/} 
     <EditProfile user={tutor} isTutor={"tutorId" in tutor}/>
+    {/*opens a form for course creation*/}
+    {"tutorId" in tutor && <><br/><CreateCourse/></>}
     </div>
-
     <div className="profile">
       <h1>Welcome to Your Profile</h1>
       {/* Clickable rating option */}

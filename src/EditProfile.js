@@ -12,6 +12,7 @@ function EditProfile(props){
     
   const [open, setOpen] = useState(false);
   const [pwopen, setPwOpen] = useState(false);
+  const [pw, setPw] = useState("");
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -24,7 +25,7 @@ function EditProfile(props){
     const effect = async () =>{
       const my_token = await localStorage.getItem("jwt");
       Utility.SetToken(my_token);
-      await Utility.MyProfile().then(res=> setFormData(res.data));
+      await Utility.MyProfile().then(res=> {setFormData(res.data);setPw(res.data.password)});
     }
     effect();
   },[]);
@@ -41,7 +42,14 @@ function EditProfile(props){
   };
   const submitForm = async (e) =>{
     e.preventDefault();
-    
+    if(e.target.name="pw-change")
+     if(document.getElementById("current_pw").value!=pw){
+      alert("wrong password!");
+      return;
+    } else if(document.getElementById("confirm_pw").value!=document.getElementById("edit_pw").value){
+      alert("please confirm your new password!");
+      return;
+    }
     if("tutorId" in formData)
         Utility.TutorUpdate(formData).then(res=>{alert(res.data);handleClose();}).catch(err=>alert(err.message));
     else
@@ -102,13 +110,13 @@ function EditProfile(props){
       <DialogTitle>Change Password</DialogTitle>
       <DialogContent>
         <form>
-           <TextField autoFocus margin="normal" type="password" id="current_pw" name="enter-password" fullWidth label="Enter Password" variant="standard"/>
-            <TextField margin="normal" type="password" id="confirm_pw" name="confirm-password" fullWidth label="Confirm Password" variant="standard"/>
-          <TextField margin="normal" type="password" id="edit_pw" name="password" fullWidth label="New Password" variant="outlined"/>
+           <TextField autoFocus margin="normal" type="password"  id="current_pw" name="password" fullWidth label="Enter Password" variant="standard"/>
+           <TextField margin="normal" onChange={handleChange} type="password" id="edit_pw" name="password" fullWidth label="New Password" variant="outlined"/>
+            <TextField margin="normal" type="password" id="confirm_pw" name="confirm-password" fullWidth label="Confirm Password" variant="outlined"/>
          </form>
       </DialogContent>
       <DialogActions>
-          <Button onClick={submitForm}>Submit</Button>
+          <Button name="pw-change" onClick={submitForm}>Submit</Button>
           <Button onClick={handleClose}>Cancel</Button>
       </DialogActions>
     </Dialog>
