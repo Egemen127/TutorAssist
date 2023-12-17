@@ -7,6 +7,7 @@ import Courses from './Courses';
 import MessageBox from './MessageBox';
 import Forum from './Forum';
 import Navbar from './Navbar';
+import RatingInput from './RatingInput'; 
 
 function StudentProfile(){
     var data = useLoaderData();
