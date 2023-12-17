@@ -10,12 +10,15 @@ import Navbar from './Navbar';
 import EditProfile from './EditProfile.js';
 import RatingInput from './RatingInput'; 
 import RatingModal from './RatingInput';
+import CreateCourse from './CreateCourse.js';
 
 function MyProfile(){
     var data = useLoaderData();
     var nav = useNavigate();
     var location = useLocation();
+    //useState to keep current user info
     var [tutor,setTutor] = React.useState({});
+
     var [open,setOpen] = React.useState(false);
     var [courseOpen,setCourseOpen] = React.useState(false);
     const handleOpen = (e)=>{
@@ -85,21 +88,7 @@ function MyProfile(){
     {/*Passing the user to display their info in the message box*/} 
     <EditProfile user={tutor} isTutor={"tutorId" in tutor}/>
     {/*opens a form for course creation*/}
-    {"tutorId" in tutor && <><br/><Button name="create-course" onClick={handleOpen}>Create Course</Button></>}
-    <Dialog open={courseOpen}> 
-      <DialogTitle>Create Course</DialogTitle>
-      <DialogContent>
-        <form>
-           <TextField autoFocus margin="normal" type="password"  id="current_pw" name="password" fullWidth label="Course Name" variant="standard"/>
-           <TextField margin="normal"  label="Start Date" type="date" id="start_dt" name="startDt" fullWidth  variant="outlined" value={Date.now.toString()}/>
-            <TextField margin="normal" label="End Date" type="date" id="end_dt" name="endDt" fullWidth  variant="outlined" value={Date.now.toString()}/>
-         </form>
-      </DialogContent>
-      <DialogActions>
-          <Button >Submit</Button>
-          <Button onClick={closeModal}>Cancel</Button>
-      </DialogActions>
-    </Dialog>
+    {"tutorId" in tutor && <><br/><CreateCourse/></>}
     </div>
     <div className="profile">
       <h1>Welcome to Your Profile</h1>

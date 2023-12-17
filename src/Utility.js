@@ -9,6 +9,19 @@ class Utility {
     Authenticate(request) {
         return axios.post(base_url+"jwt/authenticate",request);
     };
+
+    MyProfile(){
+        return axios.get(base_url+"jwt/myProfile/");
+    }
+
+    CourseCreate(request){
+        return axios.post(base_url+"Course/create/",request);
+    }
+
+    CourseDelete(courseId){
+        return axios.post(base_url+"Course/delete/"+courseId);
+    }
+
     TutorGetTutors(){
        return axios.get(base_url+"tutor/getTutors");
     };
@@ -22,28 +35,20 @@ class Utility {
         return axios.get(base_url+"tutor/getCourses/"+id);
     }
 
-    StudentGetStudents(){
-        return axios.get(base_url+"student/getStudents");
-    }
-
-    StudentGetStudent(id){
-        return axios.get(base_url+"student/get/"+id);
-    }
-
-    MessageSendMessage(request){
-        return axios.post(base_url+"messsage/create/",request);
-    }
-    
-    MessageAllMessages(request){
-        return axios.get(base_url+"messsage/allMessages/",request);
-    }
-
     TutorCreate(request){
         return axios.post(base_url+"tutor/create/",request);
     }
 
     TutorUpdate(request) {
         return axios.post(base_url+"tutor/update/",request);
+    }
+
+    StudentGetStudents(){
+        return axios.get(base_url+"student/getStudents");
+    }
+
+    StudentGetStudent(id){
+        return axios.get(base_url+"student/get/"+id);
     }
 
     StudentUpdate(request){
@@ -53,8 +58,14 @@ class Utility {
     StudentCreate(request){
         return axios.post(base_url+"student/create/",request);
     }
-    MyProfile(){
-        return axios.get(base_url+"jwt/myProfile/");
+    
+    MessageSendMessage(request){
+        return axios.post(base_url+"messsage/create/",request);
     }
+    
+    MessageAllMessages(request){
+        return axios.get(base_url+"messsage/allMessages/",request);
+    }
+
 } 
 export default new Utility();
