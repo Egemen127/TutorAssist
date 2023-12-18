@@ -14,8 +14,9 @@ function Courses(props){
     const handleRemove = (e)=>{
         if(props.myProfile){
          Utility.CourseDelete(e.target.name).then(res=> alert(res.data)).catch(err=> alert(err.message));
-        } else
-        alert("todo: add remove for student & register logic!");
+        } else {
+            Utility.RegisterationRegister(e.target.name).then(res=> alert(res.data)).catch(err=> alert(err.message));
+        }
     }
     const courses = props?.courses;
 
