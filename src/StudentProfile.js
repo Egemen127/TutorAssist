@@ -14,6 +14,10 @@ function StudentProfile(){
     var nav = useNavigate();
     var location = useLocation();
 
+    // Rating Feature const NB
+    const [showRatingModal, setShowRatingModal] = useState(false);
+    const [selectedCourse, setSelectedCourse] = useState(null);
+
     const [student,setStudent] = React.useState({});
     React.useEffect(()=>{
         const my_effect = async ()=>{
@@ -27,7 +31,24 @@ function StudentProfile(){
         }
 
         my_effect();
-    },[]);
+    },[nav]); // NB added nav as a dependency
+
+    // Rating Feature Start NB
+        const openRatingModal = (course) => {
+        setSelectedCourse(course);
+        setShowRatingModal(true);
+    };
+
+    const closeRatingModal = () => {
+        setShowRatingModal(false);
+    };
+
+    const handleRatingSubmit = (rating, review) => {
+        console.log('Course:', selectedCourse.courseName, 'Rating:', rating, 'Review:', review);
+        // Implement logic to process rating and review
+        closeRatingModal();
+    };
+    // Rating Feature End NB
 
  
     return <div style={{textAlign:"center"}}>
@@ -36,6 +57,17 @@ function StudentProfile(){
     <Typo variant='subtitle1'>{student.email}</Typo>
     <Typo variant='h2'>Courses</Typo>
     <Courses courses={student.courses} isTutor={false}/>
+
+    // Rating Feature Return Start NB 
+               {showRatingModal && (
+                <RatingInput 
+                    course={selectedCourse}
+                    onClose={closeRatingModal} 
+                    onSubmit={handleRatingSubmit} 
+                />
+            )}
+    // Rating Feature Return End NB
+   
     {/*Passing the user to display their info in the message box*/}
     <MessageBox user={student}/>
     </div>
