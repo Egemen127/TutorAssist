@@ -29,27 +29,7 @@ function StudentProfile(){
         my_effect();
     },[]);
 
-    //Rating Feature 
-    const MyProfile = () => {
-  const [showModal, setShowModal] = React.useState(false);
-
-  const openModal = () => {
-    setShowModal(true);
-  };
-
-  const closeModal = () => {
-    setShowModal(false);
-    setCourseOpen(false);
-  };
-
-  const handleRatingSubmit = (data) => {
-    // Handle the submitted rating and comment data here
-    console.log('Submitted:', data);
-    // Close the modal after submission
-    closeModal();
-  };
-    // End of Rating Feature        
-    
+ 
     return <div style={{textAlign:"center"}}>
         <Navbar />
     <Typo variant='h1'>{student.firstName} {student.lastName}</Typo>
@@ -60,18 +40,4 @@ function StudentProfile(){
     <MessageBox user={student}/>
     </div>
 
-    // Rating Feature Return
-    <div className="profile">
-      <h1>Welcome to Your Profile</h1>
-      {/* Clickable rating option */}
-      <button onClick={openModal}>Rate Courses/Tutors</button>
-      {/* Show the rating modal when showModal state is true */}
-      {showModal && (
-        <RatingModal onClose={closeModal} onSubmit={handleRatingSubmit} />
-      )}
-      {/* Other profile content */}
-    </div>
-  );
-};
-    // End of Rating Feature Return 
 } export default StudentProfile
