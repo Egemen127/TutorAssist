@@ -15,8 +15,8 @@ function StudentProfile(){
     var location = useLocation();
 
     // Rating Feature const NB
-    const [showRatingModal, setShowRatingModal] = useState(false);
-    const [selectedCourse, setSelectedCourse] = useState(null);
+    const [showRatingModal, setShowRatingModal] = React.useState(false);
+    const [selectedCourse, setSelectedCourse] = React.useState(null);
 
     const [student,setStudent] = React.useState({});
     React.useEffect(()=>{

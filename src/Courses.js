@@ -30,8 +30,8 @@ function Courses(props){
                         <Button onClick={() => handleRate(e)}>Rate</Button>
                             </ListItem>
                             <Divider />
-                            </React.Fragment> // for rating NB
+                            </> // for rating NB
                             ))}
     </List>
-);
+
 } export default Courses;

@@ -43,10 +43,11 @@ function EditProfile(props){
   const submitForm = async (e) =>{
     e.preventDefault();
     if(e.target.name="pw-change")
-     if(document.getElementById("current_pw").value!=pw){
+    
+     if(document.getElementById("current_pw")  && (document.getElementById("current_pw").value!=pw)){
       alert("wrong password!");
       return;
-    } else if(document.getElementById("confirm_pw").value!=document.getElementById("edit_pw").value){
+    } else if(document.getElementById("confirm_pw") && document.getElementById("confirm_pw").value!=document.getElementById("edit_pw").value){
       alert("please confirm your new password!");
       return;
     }
