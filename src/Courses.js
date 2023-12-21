@@ -19,6 +19,11 @@ function Courses(props){
         }
     }
 
+    const handleRates = (e)=>{
+        alert("Rate button clicked, to be implemented");
+    }
+
+
     // Added a prop function to handle rating (passed from the parent component) NB
     const handleRate = props.onRate;
     
@@ -27,7 +32,7 @@ function Courses(props){
     return <List>
         {courses?.map(e=>(<><ListItem key={e.courseId}><ListItemText primary={e.courseName} secondary={e.students?.length? `There are ${e.students?.length} students in this class`: "  "}/><ListItemText  secondary={`Starts at: ${e.startDate} Ends at: ${e.endDate}`}/>{props.isTutor&& <Button name={e.courseId} onClick={handleRemove}>{props.myProfile?"Remove":"Register"}</Button>}
         {/* Rating Button */}
-                        <Button onClick={() => handleRate(e)}>Rate</Button>
+                        <Button onClick={() => handleRates(e)}>Rate</Button>
                             </ListItem>
                             <Divider />
                             </> // for rating NB
