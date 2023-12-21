@@ -14,6 +14,10 @@ function StudentProfile(){
     var nav = useNavigate();
     var location = useLocation();
 
+    // Rating Feature const NB
+    const [showRatingModal, setShowRatingModal] = useState(false);
+    const [selectedCourse, setSelectedCourse] = useState(null);
+
     const [student,setStudent] = React.useState({});
     React.useEffect(()=>{
         const my_effect = async ()=>{
@@ -27,51 +31,45 @@ function StudentProfile(){
         }
 
         my_effect();
-    },[]);
+    },[nav]); // NB added nav as a dependency
 
-    //Rating Feature 
-    const MyProfile = () => {
-  const [showModal, setShowModal] = React.useState(false);
+    // Rating Feature Start NB
+        const openRatingModal = (course) => {
+        setSelectedCourse(course);
+        setShowRatingModal(true);
+    };
 
-  const openModal = () => {
-    setShowModal(true);
-  };
+    const closeRatingModal = () => {
+        setShowRatingModal(false);
+    };
 
-  const closeModal = () => {
-    setShowModal(false);
-    setCourseOpen(false);
-  };
+    const handleRatingSubmit = (rating, review) => {
+        console.log('Course:', selectedCourse.courseName, 'Rating:', rating, 'Review:', review);
+        // Implement logic to process rating and review
+        closeRatingModal();
+    };
+    // Rating Feature End NB
 
-  const handleRatingSubmit = (data) => {
-    // Handle the submitted rating and comment data here
-    console.log('Submitted:', data);
-    // Close the modal after submission
-    closeModal();
-  };
-    // End of Rating Feature        
-    
+ 
     return <div style={{textAlign:"center"}}>
         <Navbar />
     <Typo variant='h1'>{student.firstName} {student.lastName}</Typo>
     <Typo variant='subtitle1'>{student.email}</Typo>
     <Typo variant='h2'>Courses</Typo>
     <Courses courses={student.courses} isTutor={false}/>
+
+    // Rating Feature Return Start NB 
+               {showRatingModal && (
+                <RatingInput 
+                    course={selectedCourse}
+                    onClose={closeRatingModal} 
+                    onSubmit={handleRatingSubmit} 
+                />
+            )}
+    // Rating Feature Return End NB
+   
     {/*Passing the user to display their info in the message box*/}
     <MessageBox user={student}/>
     </div>
 
-    // Rating Feature Return
-    <div className="profile">
-      <h1>Welcome to Your Profile</h1>
-      {/* Clickable rating option */}
-      <button onClick={openModal}>Rate Courses/Tutors</button>
-      {/* Show the rating modal when showModal state is true */}
-      {showModal && (
-        <RatingModal onClose={closeModal} onSubmit={handleRatingSubmit} />
-      )}
-      {/* Other profile content */}
-    </div>
-  );
-};
-    // End of Rating Feature Return 
 } export default StudentProfile
