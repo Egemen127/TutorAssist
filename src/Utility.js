@@ -86,6 +86,9 @@ class Utility {
     RegisterationAllPending(tutor_id){
         return axios.get(base_url+"registration/Allpending/"+tutor_id)
     }
+    RegisterationDelete(id){
+            return axios.post(base_url+"registration/delete/"+id)
+        }
 
     RegisterationAllStudentReg(student_id){
         return axios.get(base_url+"registration/AllStudentReg/"+student_id)

@@ -13,7 +13,10 @@ function Registration(props){
 
     const rejectStudent = (e) => {
         if(!props.isTutor){
-            alert("todo: add cancel logic for student!!");
+            //alert("todo: add cancel logic for student!!");
+            Utility.RegisterationDelete(e.target.name)
+            .then(res=> alert(res.data))
+            .catch(err=> alert(err.message));
             return;
         }
 
