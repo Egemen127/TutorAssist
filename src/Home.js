@@ -72,7 +72,7 @@ function Home() {
       <header className="App-header">
         <img className='App-logo'src='https://picsum.photos/50' alt='tutorassist.io logo'/>
         <h2>TutorAssist.IO</h2>
-        <div className='login-wrapper'>
+       {/* <div className='login-wrapper'>
           <input className='input-field' value={credentials.username} //onKeyDown={(e)=>{if(e.key=='Enter')clickButton(e)}} 
           onChange={handleChange} placeholder='Username' type={'username'}
           label='username'
@@ -83,7 +83,41 @@ function Home() {
           <button className='Button' name="Login"  onClick={clickButton}>Login</button>
           <button className='Button' name="Register"  onClick={handleOpen}>Register</button>
           <a href="/forgotpw">Forgot Password</a>
-        </div>
+        </div>*/}
+         <div className='login-wrapper'>
+      <h4>Sign In To Your Account</h4>
+      <div>
+        <label>
+          Username:
+          <input
+            className='input-field'
+            type="text"
+            placeholder="Enter your username"
+            value={credentials.username}
+            onChange={handleChange}
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          Password:
+          <input
+            className='input-field'
+            type="password"
+            placeholder="Enter your password"
+            value={credentials.password}
+            onChange={handleChange}
+          />
+        </label>
+      </div>
+      <div>
+        <button className='Button' name="Login" onClick={clickButton}>Sign In</button>
+        <button className='Button' name="Register"  onClick={handleOpen}>Register</button>
+      </div>
+      <div>
+        <a href="/forgotpw">Forgot Password?</a>
+      </div>
+    </div>
       </header>
       <div className='App-body'>
         <div className='about-us frame'>
@@ -145,7 +179,9 @@ function Home() {
           ● If a user forgets a password, they can reset it using their security questions.</p>
         </div>
       </div>
-      <footer style={{backgroundColor:"red", justifyContent:"flex-end"}}>TutorAssist.io</footer>
+      <div className="footer">
+        TUTORS FROM PRESTIGIOUS UNIVERSITIES SUCH AS CORNELL, STANFORD, YALE, NYU, MIT AND MORE!
+      </div>
     </div>
   );
 }
