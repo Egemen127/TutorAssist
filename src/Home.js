@@ -92,6 +92,7 @@ function Home() {
           <input
             className='input-field'
             type="text"
+            name = 'username'
             placeholder="Enter your username"
             value={credentials.username}
             onChange={handleChange}
@@ -104,6 +105,7 @@ function Home() {
           <input
             className='input-field'
             type="password"
+            name='password'
             placeholder="Enter your password"
             value={credentials.password}
             onChange={handleChange}
